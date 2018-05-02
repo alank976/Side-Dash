@@ -11,7 +11,7 @@ def data_from_backend():
         'What' : ['Tech debt 1', 'Support-Celine'],
         'How long(hours)' : [1, 0.5]
     }, columns=['When', 'Who', 'What', 'How long(hours)'])
-    df = df.append(dict(When=_datetime.now()), True)
+    df = df.append(dict(), True)
     return df.sort_values('When')
 
 def update(id, field, value):

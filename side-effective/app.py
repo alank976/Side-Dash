@@ -51,7 +51,7 @@ def update_record(row_update, rows):
             dff = datasource.data_from_backend()  # should be updated receiving from backend
             dff.loc[from_row:to_row+1] = dff[from_row:to_row +
                                              1].assign(**updated_dict)
-            return dff.append(dict(When=_datetime.now()), ignore_index=True).to_dict('records')
+            return dff.append(dict(), ignore_index=True).to_dict('records')
     return rows
 
 
@@ -90,14 +90,6 @@ def redraw_graph_figure(rows, selected_row_indices):
         'marker': marker
     }, 3, 1)
     fig['layout']['showlegend'] = True
-    fig['layout']['height'] = 800
-    fig['layout']['margin'] = {
-        'l': 40,
-        'r': 10,
-        't': 60,
-        'b': 200
-    }
-    fig['layout']['yaxis3']['type'] = 'log'
     return fig
 
 

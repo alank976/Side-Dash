@@ -8,10 +8,13 @@ _TASK_ID_URL = _BASE_URL + "/{id}"
 
 
 def data_from_backend():
-    tasks = _requests.get(_BASE_URL).content
+    try:
+        tasks = _requests.get(_BASE_URL).json()
+    except: 
+        tasks = []
     return (
-        _pd.read_json(tasks)
-        [['id', 'date', 'personName', 'taskName', 'hourSpent']]
+        _pd.DataFrame(tasks,
+                      columns=['id', 'date', 'personName', 'taskName', 'hourSpent'])
         .sort_values('date')
         .append(dict(), True)
     )
@@ -25,9 +28,11 @@ def update(id, field, value):
     r = _requests.post(_BASE_URL, json=task)
     print('Updated={}'.format(r.content))
 
+
 def delete(id):
     # print('Delete '+id)
     _requests.delete(_TASK_ID_URL.format(id=id))
+
 
 def get_task(id):
     return _requests.get(_TASK_ID_URL.format(id=id)).json()

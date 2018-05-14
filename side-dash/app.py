@@ -28,7 +28,7 @@ app.layout = html.Div([
         selected_row_indices=[],
         id='table'
     ),
-    html.Button(id='click'),
+    html.Button('Delete', id='delete-button'),
     html.Div(id='selected-indexes'),
     dcc.Graph(id='graph'),
 ], className="container")
@@ -37,6 +37,25 @@ app.css.append_css({
     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
 })
 
+
+# @app.callback(
+#     Output('delete-button', 'disabled'),
+#     [Input('table', 'selected_row_indices')])
+# def enable_delete_button_on_select_row_index(selected_row_indices):
+#     print('@@@@@@@@@@@@@@@@selected_row_indices=' + str(selected_row_indices))
+#     if selected_row_indices:
+#         return True
+#     else:
+#         return False
+
+# @app.callback(
+#     Output('dev-log', 'n_clicks'),
+#     [Input('delete-button', 'n_clicks')],
+#     [State('table', 'selected_row_indices')])
+# def delete_record(n_clicks, selected_row_indices):
+#     print('@@@@@@@@@@@@@@@@@@@delete')
+#     print(selected_row_indices)
+#     pass
 
 @app.callback(
     Output('table', 'rows'),
@@ -48,8 +67,6 @@ def update_record(row_update, rows):
         for i in range(from_row, to_row + 1):
             for k, v in updated_dict.items():
                 uuid = rows[i]['id']
-                # print('i={},k={},v={}'.format(i, k, v))
-                # print(row_update)
                 if k == 'id' and v == "":
                     datasource.delete(uuid)
                 else:

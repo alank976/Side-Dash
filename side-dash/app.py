@@ -16,7 +16,6 @@ app = dash.Dash()
 app.layout = html.Div([
     html.H1('Side Dash: Side Task Tracker'),
     html.Div(id='dev-log'),
-    html.Button(id='click'),
     dt.DataTable(
         rows=df.to_dict('records'),
         columns=df.columns,
@@ -29,6 +28,7 @@ app.layout = html.Div([
         selected_row_indices=[],
         id='table'
     ),
+    html.Button(id='click'),
     html.Div(id='selected-indexes'),
     dcc.Graph(id='graph'),
 ], className="container")
